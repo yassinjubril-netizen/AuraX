@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AURAX</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- INTRO -->
+<div id="intro" class="screen intro-only">
+  <h1 id="logo">AURAX</h1>
+  <p id="typewriter"></p>
+</div>
+
+<!-- LOGIN -->
+<div id="login" class="screen hidden reaper-bg">
+  <div class="overlay"></div>
+  <div class="login-box">
+    <h2>ENTER AURAX</h2>
+    <input id="username" placeholder="Username">
+    <input id="password" type="password" placeholder="Password">
+    <button onclick="login()">Proceed</button>
+  </div>
+</div>
+
+<!-- HOME -->
+<div id="home" class="screen hidden reaper-bg">
+  <div class="overlay"></div>
+
+  <div id="stats">
+    Aura: <span id="aura">0</span> |
+    Level: <span id="level">1</span>
+  </div>
+
+  <div id="quish-container">
+    <div class="quish active">QUISh 1</div>
+    <div class="quish">QUISh 2</div>
+    <div class="quish">QUISh 3</div>
+  </div>
+</div>
+
+<!-- FIREBASE v8 (IMPORTANT) -->
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+
+<script src="script.js"></script>
+</body>
+</html>

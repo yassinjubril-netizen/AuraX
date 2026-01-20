@@ -1,0 +1,121 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
+}
+
+body {
+  background: black;
+  overflow: hidden;
+}
+
+.screen {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.hidden { display: none; }
+
+.intro-only { background: black; }
+
+.reaper-bg {
+  background: url("grimreaper.jpg") center/cover no-repeat;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+}
+
+/* INTRO */
+#logo {
+  font-size: 4rem;
+  letter-spacing: 10px;
+  color: #a855f7;
+  text-shadow: 0 0 30px purple;
+  animation: rise 2s ease-out forwards;
+}
+
+#typewriter {
+  margin-top: 20px;
+  color: #d6c6ff;
+  letter-spacing: 3px;
+}
+
+@keyframes rise {
+  from { transform: translateY(120px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* LOGIN */
+.login-box {
+  z-index: 2;
+  background: rgba(0,0,0,0.65);
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 0 30px purple;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.login-box h2 { color: #a855f7; text-align: center; }
+
+.login-box input {
+  padding: 10px;
+  background: black;
+  border: 1px solid purple;
+  color: white;
+  border-radius: 8px;
+}
+
+.login-box button {
+  padding: 10px;
+  background: purple;
+  border: none;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* HOME */
+#stats {
+  position: absolute;
+  top: 20px;
+  color: #a855f7;
+  z-index: 2;
+}
+
+/* QUISh */
+#quish-container {
+  position: relative;
+}
+
+.quish {
+  position: absolute;
+  width: 260px;
+  height: 420px;
+  background: black;
+  border: 2px solid purple;
+  border-radius: 20px;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  opacity: 0;
+  transform: scale(0.6);
+  transition: all 0.5s ease;
+}
+
+.quish.active {
+  opacity: 1;
+  transform: scale(1);
+  box-shadow: 0 0 40px purple;
+}
