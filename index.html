@@ -4,47 +4,46 @@
   <meta charset="UTF-8">
   <title>AURAX</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
+
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <!-- INTRO -->
-<div id="intro" class="screen intro-only">
+<section id="intro">
   <h1 id="logo">AURAX</h1>
-  <p id="typewriter"></p>
-</div>
+  <p id="caption"></p>
+</section>
 
-<!-- LOGIN -->
-<div id="login" class="screen hidden reaper-bg">
-  <div class="overlay"></div>
-  <div class="login-box">
-    <h2>ENTER AURAX</h2>
-    <input id="username" placeholder="Username">
-    <input id="password" type="password" placeholder="Password">
-    <button onclick="login()">Proceed</button>
-  </div>
-</div>
+<!-- AUTH -->
+<section id="auth" class="hidden">
+  <input id="email" placeholder="Email">
+  <input id="password" type="password" placeholder="Password">
+  <button onclick="login()">Login</button>
+  <button onclick="signup()">Sign Up</button>
+</section>
 
 <!-- HOME -->
-<div id="home" class="screen hidden reaper-bg">
-  <div class="overlay"></div>
+<section id="home" class="hidden">
+  <header>
+    <span>Aura: <b id="auraCount">0</b></span>
+    <button onclick="logout()">Logout</button>
+  </header>
 
-  <div id="stats">
-    Aura: <span id="aura">0</span> |
-    Level: <span id="level">1</span>
+  <div id="createPost">
+    <input id="postText" placeholder="Drop your aura...">
+    <input type="file" id="postImage">
+    <button onclick="createPost()">Post</button>
   </div>
 
-  <div id="quish-container">
-    <div class="quish active">QUISh 1</div>
-    <div class="quish">QUISh 2</div>
-    <div class="quish">QUISh 3</div>
-  </div>
-</div>
-
-<!-- FIREBASE v8 (IMPORTANT) -->
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <div id="feed"></div>
+</section>
 
 <script src="script.js"></script>
 </body>

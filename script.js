@@ -1,105 +1,113 @@
-/* 🔥 FIREBASE CONFIG — PASTE YOUR REAL ONE */
+// FIREBASE CONFIG
 const firebaseConfig = {
-  apiKey: "PASTE_YOURS",
-  authDomain: "PASTE_YOURS",
-  projectId: "PASTE_YOURS",
-  storageBucket: "PASTE_YOURS",
-  messagingSenderId: "PASTE_YOURS",
-  appId: "PASTE_YOURS"
+  apiKey: "AIzaSyDDdR6_bwmdjO3KRGXSCoowgKVoA7bTADc",
+  authDomain: "aurax-3b53f.firebaseapp.com",
+  projectId: "aurax-3b53f",
+  storageBucket: "aurax-3b53f.appspot.com",
+  messagingSenderId: "518223462689",
+  appId: "1:518223462689:web:eda88815480186f26b7e60"
 };
 
 firebase.initializeApp(firebaseConfig);
 
 const auth = firebase.auth();
 const db = firebase.firestore();
+const storage = firebase.storage();
 
-/* SCREENS */
-const intro = document.getElementById("intro");
-const loginScreen = document.getElementById("login");
-const home = document.getElementById("home");
-const typewriter = document.getElementById("typewriter");
+// INTRO TYPEWRITER
+const captionText = "You have been selected.";
+let i = 0;
+const caption = document.getElementById("caption");
 
-/* TYPEWRITER */
-const text = "ARISE — YOUR AURA AWAITS";
-let t = 0;
-(function typeEffect() {
-  if (t < text.length) {
-    typewriter.innerHTML += text.charAt(t++);
-    setTimeout(typeEffect, 90);
+function typeText() {
+  if (i < captionText.length) {
+    caption.textContent += captionText[i++];
+    setTimeout(typeText, 80);
   }
-})();
+}
+typeText();
 
-/* AUTO FLOW */
 setTimeout(() => {
+  intro.classList.add("hidden");
   auth.onAuthStateChanged(user => {
-    intro.classList.add("hidden");
-    if (user) home.classList.remove("hidden");
-    else loginScreen.classList.remove("hidden");
+    if (user) showHome(user);
+    else authSection.classList.remove("hidden");
   });
-}, 4000);
+}, 2500);
 
-/* LOGIN / SIGNUP */
+// AUTH
+function signup() {
+  auth.createUserWithEmailAndPassword(email.value, password.value)
+    .then(res => {
+      db.collection("users").doc(res.user.uid).set({ aura: 0 });
+    });
+}
+
 function login() {
-  const username = document.getElementById("username").value.trim();
-  const password = document.getElementById("password").value;
-
-  if (!username || !password) return alert("Fill all fields");
-
-  const email = `${username}@aurax.app`;
-
-  auth.signInWithEmailAndPassword(email, password)
-    .catch(() => {
-      return auth.createUserWithEmailAndPassword(email, password)
-        .then(cred => {
-          return db.collection("users").doc(cred.user.uid).set({
-            username,
-            aura: 0,
-            level: 1,
-            followers: 0,
-            following: 0
-          });
-        });
-    })
-    .then(() => {
-      loginScreen.classList.add("hidden");
-      home.classList.remove("hidden");
-    })
-    .catch(err => alert(err.message));
+  auth.signInWithEmailAndPassword(email.value, password.value);
 }
 
-/* LOAD USER DATA */
-auth.onAuthStateChanged(user => {
-  if (!user) return;
-  db.collection("users").doc(user.uid).get().then(doc => {
-    if (doc.exists) {
-      document.getElementById("aura").innerText = doc.data().aura;
-      document.getElementById("level").innerText = doc.data().level;
-    }
+function logout() {
+  auth.signOut();
+  location.reload();
+}
+
+// HOME
+function showHome(user) {
+  authSection.classList.add("hidden");
+  home.classList.remove("hidden");
+
+  db.collection("users").doc(user.uid)
+    .onSnapshot(doc => auraCount.textContent = doc.data().aura);
+
+  loadPosts();
+}
+
+// POSTS
+function createPost() {
+  const file = postImage.files[0];
+  if (!file) return;
+
+  const ref = storage.ref("posts/" + Date.now());
+  ref.put(file).then(snap =>
+    snap.ref.getDownloadURL().then(url => {
+      db.collection("posts").add({
+        text: postText.value,
+        image: url,
+        aura: 0,
+        time: Date.now()
+      });
+      postText.value = "";
+      postImage.value = "";
+    })
+  );
+}
+
+function loadPosts() {
+  db.collection("posts")
+    .orderBy("time", "desc")
+    .onSnapshot(snap => {
+      feed.innerHTML = "";
+      snap.forEach(doc => {
+        const p = doc.data();
+        feed.innerHTML += `
+          <div class="post">
+            <p>${p.text}</p>
+            <img src="${p.image}">
+            <button onclick="giveAura('${doc.id}')">+ Aura (${p.aura})</button>
+          </div>
+        `;
+      });
+    });
+}
+
+function giveAura(id) {
+  db.collection("posts").doc(id).update({
+    aura: firebase.firestore.FieldValue.increment(1)
   });
-});
-
-/* QUISh LOGIC */
-const quish = document.querySelectorAll(".quish");
-let current = 0;
-
-function updateQuish() {
-  quish.forEach((q, i) => q.classList.toggle("active", i === current));
 }
 
-/* ZOOM OUT → NEXT */
-document.addEventListener("wheel", e => {
-  if (e.deltaY > 0 && current < quish.length - 1) {
-    current++;
-    updateQuish();
-  }
-});
-
-/* MOBILE SWIPE */
-let startY = 0;
-document.addEventListener("touchstart", e => startY = e.touches[0].clientY);
-document.addEventListener("touchend", e => {
-  if (startY - e.changedTouches[0].clientY > 50 && current < quish.length - 1) {
-    current++;
-    updateQuish();
-  }
-});
+// ELEMENTS
+const intro = document.getElementById("intro");
+const authSection = document.getElementById("auth");
+const home = document.getElementById("home");

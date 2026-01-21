@@ -2,15 +2,21 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Segoe UI", sans-serif;
+  font-family: 'Segoe UI', sans-serif;
 }
 
 body {
   background: black;
-  overflow: hidden;
+  color: white;
+  height: 100vh;
 }
 
-.screen {
+.hidden {
+  display: none;
+}
+
+/* INTRO */
+#intro {
   position: fixed;
   inset: 0;
   display: flex;
@@ -19,103 +25,80 @@ body {
   align-items: center;
 }
 
-.hidden { display: none; }
-
-.intro-only { background: black; }
-
-.reaper-bg {
-  background: url("grimreaper.jpg") center/cover no-repeat;
-}
-
-.overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.75);
-}
-
-/* INTRO */
 #logo {
-  font-size: 4rem;
-  letter-spacing: 10px;
-  color: #a855f7;
-  text-shadow: 0 0 30px purple;
-  animation: rise 2s ease-out forwards;
+  font-size: 80px;
+  color: #8f4cff;
+  letter-spacing: 12px;
+  text-shadow: 0 0 25px rgba(160,100,255,0.9);
 }
 
-#typewriter {
-  margin-top: 20px;
-  color: #d6c6ff;
-  letter-spacing: 3px;
+#caption {
+  margin-top: 15px;
+  color: #d8c7ff;
 }
 
-@keyframes rise {
-  from { transform: translateY(120px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
-}
-
-/* LOGIN */
-.login-box {
-  z-index: 2;
-  background: rgba(0,0,0,0.65);
-  padding: 30px;
-  border-radius: 16px;
-  box-shadow: 0 0 30px purple;
+/* AUTH */
+#auth {
+  position: fixed;
+  inset: 0;
   display: flex;
   flex-direction: column;
   gap: 15px;
+  justify-content: center;
+  align-items: center;
 }
 
-.login-box h2 { color: #a855f7; text-align: center; }
-
-.login-box input {
+#auth input {
   padding: 10px;
+  width: 250px;
   background: black;
   border: 1px solid purple;
   color: white;
-  border-radius: 8px;
-}
-
-.login-box button {
-  padding: 10px;
-  background: purple;
-  border: none;
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
 }
 
 /* HOME */
-#stats {
-  position: absolute;
-  top: 20px;
-  color: #a855f7;
-  z-index: 2;
+#home {
+  padding-bottom: 40px;
 }
 
-/* QUISh */
-#quish-container {
-  position: relative;
-}
-
-.quish {
-  position: absolute;
-  width: 260px;
-  height: 420px;
-  background: black;
-  border: 2px solid purple;
-  border-radius: 20px;
-  color: white;
+header {
+  padding: 15px;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 2rem;
-  opacity: 0;
-  transform: scale(0.6);
-  transition: all 0.5s ease;
+  justify-content: space-between;
+  border-bottom: 1px solid purple;
 }
 
-.quish.active {
-  opacity: 1;
-  transform: scale(1);
-  box-shadow: 0 0 40px purple;
+#createPost {
+  padding: 15px;
+  display: flex;
+  gap: 10px;
+}
+
+#createPost input {
+  background: black;
+  border: 1px solid purple;
+  color: white;
+  padding: 8px;
+}
+
+#feed {
+  padding: 15px;
+}
+
+.post {
+  border: 1px solid purple;
+  padding: 10px;
+  margin-bottom: 15px;
+}
+
+.post img {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.post button {
+  margin-top: 10px;
+  background: none;
+  border: 1px solid white;
+  color: white;
 }
